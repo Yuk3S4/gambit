@@ -21,9 +21,7 @@ func Manejadores(path, method, body string, headers map[string]string, request e
 		return statusCode, user
 	}
 
-	fmt.Println("Path:", path[1:5])
-
-	switch path[0:4] {
+	switch path[1:5] {
 	case "user":
 		return ProcesoUsers(body, path, method, user, id, request)
 
