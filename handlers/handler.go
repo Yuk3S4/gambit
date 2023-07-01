@@ -50,7 +50,7 @@ func validoAuthorization(path, method string, headers map[string]string) (bool, 
 		return true, 200, ""
 	}
 
-	token := headers["authorizaion"]
+	token := headers["authorization"]
 	if len(token) == 0 {
 		return false, 401, "Token requerido"
 	}
