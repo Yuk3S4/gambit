@@ -35,3 +35,29 @@ func InsertCategory(body, User string) (int, string) {
 
 	return 200, "{ CategID: " + strconv.Itoa(int(result)) + "}"
 }
+
+func UpdateCategory(body, User string, id int) (int, string) {
+	var t models.Category
+
+	err := json.Unmarshal([]byte(body), &t)
+	if err != nil {
+		return 400, "Error en los datos recibidos " + err.Error()
+	}
+
+	if len(t.CateName) == 0 && len(t.CatePath) == 0 {
+		return 400, "Debe de especificar CateName y CatePath para actualizar"
+	}
+
+	isAdmin, msg := bd.UserIsAdmin(User)
+	if !isAdmin {
+		return 400, msg
+	}
+
+	t.CategID = id
+	err = bd.UpdateCategory(t)
+	if err != nil {
+		return 400, "Ocurrió un error al intentar hacer el UPDATE de la categoria " + strconv.Itoa(id) + " > " + err.Error()
+	}
+
+	return 200, "Update OK"
+}
