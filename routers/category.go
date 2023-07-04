@@ -6,6 +6,7 @@ import (
 
 	"github.com/Yuk3S4/gambit/bd"
 	"github.com/Yuk3S4/gambit/models"
+	"github.com/aws/aws-lambda-go/events"
 )
 
 func InsertCategory(body, User string) (int, string) {
@@ -78,4 +79,33 @@ func DeleteCategory(body, User string, id int) (int, string) {
 	}
 
 	return 200, "Delete OK"
+}
+
+func SelectCategories(body string, request events.APIGatewayV2HTTPRequest) (int, string) {
+	var err error
+	var CategId int
+	var Slug string
+
+	if len(request.QueryStringParameters["categId"]) > 0 {
+		CategId, err = strconv.Atoi(request.QueryStringParameters["categId"])
+		if err != nil {
+			return 500, "Ocurrión un error al intentar convertir en entero el valor " + request.QueryStringParameters["categId"]
+		}
+	} else {
+		if len(request.QueryStringParameters["slug"]) > 0 {
+			Slug = request.QueryStringParameters["slug"]
+		}
+	}
+
+	lista, err := bd.SelectCategories(CategId, Slug)
+	if err != nil {
+		return 400, "Ocurrió un error al intentar capturar Categoría/s " + err.Error()
+	}
+
+	Categ, err := json.Marshal(lista)
+	if err != nil {
+		return 400, "Ocurrió un error al intentar convertir en JSON Categoría/s " + err.Error()
+	}
+
+	return 200, string(Categ)
 }

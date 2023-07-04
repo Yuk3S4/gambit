@@ -80,6 +80,8 @@ func ProcesoProducts(body, path, method, user string, id int, request events.API
 
 func ProcesoCategory(body, path, method, user string, id int, request events.APIGatewayV2HTTPRequest) (int, string) {
 	switch method {
+	case "GET":
+		return routers.SelectCategories(body, request)
 	case "POST":
 		return routers.InsertCategory(body, user)
 	case "PUT":
