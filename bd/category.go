@@ -106,7 +106,7 @@ func SelectCategories(categId int, slug string) ([]models.Category, error) {
 	sentencia := "SELECT Categ_Id, Categ_Name, Categ_Path FROM category "
 
 	if categId > 0 {
-		sentencia += "WHERE id = " + strconv.Itoa(categId)
+		sentencia += "WHERE Categ_Id = " + strconv.Itoa(categId)
 	} else {
 		if len(slug) > 0 {
 			sentencia += "WHERE Categ_Path LIKE '%" + slug + "%'"
