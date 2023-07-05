@@ -45,7 +45,7 @@ func UpdateProduct(body, User string, id int) (int, string) {
 		return 400, msg
 	}
 
-	t.ProdCategId = id
+	t.ProdId = id
 	err = bd.UpdateProduct(t)
 	if err != nil {
 		return 400, "Ocurrió un error al intentar hacer el UPDATE del producto " + strconv.Itoa(id) + " > " + err.Error()
