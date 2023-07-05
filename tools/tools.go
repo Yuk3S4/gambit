@@ -21,7 +21,7 @@ func EscapeString(t string) string {
 	return desc
 }
 
-func ArmoSentencia(s, fieldName, typeField, ValueS string, ValueN int, ValueF float64) string {
+func ArmoSentencia(s, fieldName, typeField string, ValueN int, ValueF float64, ValueS string) string {
 	if (typeField == "S" && len(ValueS) == 0) ||
 		(typeField == "F" && ValueF == 0) ||
 		(typeField == "N" && ValueN == 0) {
