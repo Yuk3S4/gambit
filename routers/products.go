@@ -31,3 +31,25 @@ func InsertProduct(body, User string) (int, string) {
 
 	return 200, "{ ProductID: " + strconv.Itoa(int(result)) + "}"
 }
+
+func UpdateProduct(body, User string, id int) (int, string) {
+	var t models.Product
+
+	err := json.Unmarshal([]byte(body), &t)
+	if err != nil {
+		return 400, "Error en los datos recibidos " + err.Error()
+	}
+
+	isAdmin, msg := bd.UserIsAdmin(User)
+	if !isAdmin {
+		return 400, msg
+	}
+
+	t.ProdCategId = id
+	err = bd.UpdateProduct(t)
+	if err != nil {
+		return 400, "Ocurrió un error al intentar hacer el UPDATE del producto " + strconv.Itoa(id) + " > " + err.Error()
+	}
+
+	return 200, "Update OK"
+}
