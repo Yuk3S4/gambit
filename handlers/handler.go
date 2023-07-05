@@ -75,6 +75,11 @@ func ProcesoUsers(body, path, method, user, id string, request events.APIGateway
 }
 
 func ProcesoProducts(body, path, method, user string, id int, request events.APIGatewayV2HTTPRequest) (int, string) {
+	switch method {
+	case "POST":
+		return routers.InsertProduct(body, user)
+	}
+
 	return 400, "Method Invalid"
 }
 
