@@ -76,6 +76,8 @@ func ProcesoUsers(body, path, method, user, id string, request events.APIGateway
 
 func ProcesoProducts(body, path, method, user string, id int, request events.APIGatewayV2HTTPRequest) (int, string) {
 	switch method {
+	case "GET":
+		return routers.SelectProduct(request)
 	case "POST":
 		return routers.InsertProduct(body, user)
 	case "PUT":
