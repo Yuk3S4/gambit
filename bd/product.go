@@ -169,6 +169,8 @@ func SelectProduct(p models.Product, choice string, page, pageSize int, orderTyp
 
 	sentenciaCount += where
 
+	fmt.Println(sentenciaCount)
+
 	var rows *sql.Rows
 	rows, err = Db.Query(sentenciaCount)
 	defer rows.Close()
