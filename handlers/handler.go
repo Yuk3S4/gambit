@@ -71,6 +71,13 @@ func validoAuthorization(path, method string, headers map[string]string) (bool, 
 }
 
 func ProcesoUsers(body, path, method, user, id string, request events.APIGatewayV2HTTPRequest) (int, string) {
+	if path == "/user/me" {
+		switch method {
+		case "PUT":
+			return routers.UpdateUser(body, user)
+		}
+	}
+
 	return 400, "Method Invalid"
 }
 
