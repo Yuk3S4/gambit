@@ -80,6 +80,11 @@ func ProcesoUsers(body, path, method, user, id string, request events.APIGateway
 
 		}
 	}
+	if path == "/users" {
+		if method == "GET" {
+			return routers.SelectUsers(body, user, request)
+		}
+	}
 
 	return 400, "Method Invalid"
 }
