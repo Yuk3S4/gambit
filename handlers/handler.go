@@ -75,6 +75,9 @@ func ProcesoUsers(body, path, method, user, id string, request events.APIGateway
 		switch method {
 		case "PUT":
 			return routers.UpdateUser(body, user)
+		case "GET":
+			return routers.SelectUser(body, user)
+
 		}
 	}
 
