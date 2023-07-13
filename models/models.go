@@ -58,7 +58,7 @@ type Address struct {
 	AddId         int    `json:"addId"`
 	AddTitle      string `json:"addTitle"`
 	AddName       string `json:"addName"`
-	AddAdress     string `json:"addAdress"`
+	AddAdress     string `json:"addAddress"`
 	AddCity       string `json:"addCity"`
 	AddState      string `json:"addState"`
 	AddPostalCode string `json:"addPostalCode"`
