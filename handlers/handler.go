@@ -129,6 +129,8 @@ func ProcesoAddress(body, path, method, user string, id int, request events.APIG
 		return routers.InsertAddress(body, user)
 	case "PUT":
 		return routers.UpdateAddress(body, user, id)
+	case "DELETE":
+		return routers.DeleteAddress(user, id)
 	}
 
 	return 400, "Method Invalid"
