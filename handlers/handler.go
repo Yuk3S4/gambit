@@ -125,6 +125,8 @@ func ProcesoStock(body, path, method, user string, id int, request events.APIGat
 
 func ProcesoAddress(body, path, method, user string, id int, request events.APIGatewayV2HTTPRequest) (int, string) {
 	switch method {
+	case "GET":
+		return routers.SelectAddress(user)
 	case "POST":
 		return routers.InsertAddress(body, user)
 	case "PUT":

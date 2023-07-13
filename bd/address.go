@@ -1,6 +1,7 @@
 package bd
 
 import (
+	"database/sql"
 	"fmt"
 	"strconv"
 	"strings"
@@ -123,4 +124,56 @@ func DeleteAddress(id int) error {
 
 	fmt.Println("Delete Address > Ejecución Exitosa")
 	return nil
+}
+
+func SelectAddress(User string) ([]models.Address, error) {
+	fmt.Println("Comienza SelectAddress")
+
+	var addrs []models.Address
+
+	err := DbConnect()
+	if err != nil {
+		return addrs, err
+	}
+	defer Db.Close()
+
+	sentencia := "SELECT Add_Id, Add_UserId, Add_Address, Add_City, Add_State, Add_PostalCode, Add_Phone, Add_Title, Add_Name FROM addresses WHERE Add_UserId = '" + User + "'"
+
+	var rows *sql.Rows
+	rows, err = Db.Query(sentencia)
+	if err != nil {
+		fmt.Println(err)
+		return addrs, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var a models.Address
+		var addId sql.NullInt16
+		var addAddress sql.NullString
+		var addCity sql.NullString
+		var addState sql.NullString
+		var addPostalCode sql.NullString
+		var addPhone sql.NullString
+		var addTitle sql.NullString
+		var addName sql.NullString
+
+		err := rows.Scan(&addId, &addAddress, &addCity, &addState, &addPostalCode, &addPhone, &addTitle, &addName)
+		if err != nil {
+			return addrs, err
+		}
+
+		a.AddId = int(addId.Int16)
+		a.AddAdress = addAddress.String
+		a.AddCity = addCity.String
+		a.AddState = addState.String
+		a.AddPostalCode = addPostalCode.String
+		a.AddPhone = addPhone.String
+		a.AddTitle = addTitle.String
+		a.AddName = addName.String
+		addrs = append(addrs, a)
+	}
+
+	fmt.Println("Select Addresses > Ejecución Exitosa")
+	return addrs, nil
 }
