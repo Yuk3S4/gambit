@@ -54,7 +54,7 @@ func SelectOrders(user, fechaDesde, fechaHasta string, page, orderId int) ([]mod
 
 	var orders []models.Orders
 
-	sentencia := "SELECT Order_Id, Order_UserUUID, Order_AddId, Order_Date, Order_Total, FROM orders "
+	sentencia := "SELECT Order_Id, Order_UserUUID, Order_AddId, Order_Date, Order_Total FROM orders "
 
 	if orderId > 0 {
 		sentencia += " WHERE Order_Id = " + strconv.Itoa(orderId)
