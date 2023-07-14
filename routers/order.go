@@ -6,6 +6,7 @@ import (
 
 	"github.com/Yuk3S4/gambit/bd"
 	"github.com/Yuk3S4/gambit/models"
+	"github.com/aws/aws-lambda-go/events"
 )
 
 func InsertOrder(body, User string) (int, string) {
@@ -52,4 +53,35 @@ func validOrder(o models.Orders) (bool, string) {
 	}
 
 	return true, ""
+}
+
+func SelectOrders(user string, request events.APIGatewayV2HTTPRequest) (int, string) {
+	var fechaDesde, fechaHasta string
+	var orderId int
+	var page int
+
+	if len(request.QueryStringParameters["fechaDesde"]) > 0 {
+		fechaDesde = request.QueryStringParameters["fechaDesde"]
+	}
+	if len(request.QueryStringParameters["fechaHasta"]) > 0 {
+		fechaHasta = request.QueryStringParameters["fechaHasta"]
+	}
+	if len(request.QueryStringParameters["page"]) > 0 {
+		page, _ = strconv.Atoi(request.QueryStringParameters["page"])
+	}
+	if len(request.QueryStringParameters["orderId"]) > 0 {
+		orderId, _ = strconv.Atoi(request.QueryStringParameters["orderId"])
+	}
+
+	result, err := bd.SelectOrders(user, fechaDesde, fechaHasta, page, orderId)
+	if err != nil {
+		return 400, "Ocurrió un error al intentar capturar los registros de órdenes del " + fechaDesde + " al " + fechaHasta + " > " + err.Error()
+	}
+
+	orders, err := json.Marshal(result)
+	if err != nil {
+		return 400, "Ocurrió un error al intentar convertir en JSON el registro de Órden"
+	}
+
+	return 200, string(orders)
 }

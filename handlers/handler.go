@@ -140,6 +140,8 @@ func ProcesoAddress(body, path, method, user string, id int, request events.APIG
 
 func ProcesoOrder(body, path, method, user string, id int, request events.APIGatewayV2HTTPRequest) (int, string) {
 	switch method {
+	case "GET":
+		return routers.SelectOrders(user, request)
 	case "POST":
 		return routers.InsertOrder(body, user)
 	}
