@@ -155,13 +155,13 @@ func SelectProduct(p models.Product, choice string, page, pageSize int, orderTyp
 
 	switch choice {
 	case "P":
-		where = "WHERE Prod_Id = " + strconv.Itoa(p.ProdId)
+		where = " WHERE Prod_Id = " + strconv.Itoa(p.ProdId)
 	case "S":
-		where = "WHERE UCASE(CONCAT(Prod_Title, Prod_Description)) LIKE '%" + strings.ToUpper(p.ProdSearch) + "%' "
+		where = " WHERE UCASE(CONCAT(Prod_Title, Prod_Description)) LIKE '%" + strings.ToUpper(p.ProdSearch) + "%' "
 	case "C":
-		where = "WHERE Prod_CategoryId = " + strconv.Itoa(p.ProdCategId)
+		where = " WHERE Prod_CategoryId = " + strconv.Itoa(p.ProdCategId)
 	case "U":
-		where = "WHERE UCASE(Prod_Path) LIKE '%" + strings.ToUpper(p.ProdPath) + "%' "
+		where = " WHERE UCASE(Prod_Path) LIKE '%" + strings.ToUpper(p.ProdPath) + "%' "
 	case "K":
 		join := " JOIN category ON Prod_CategoryId = Categ_Id AND Categ_Path LIKE '%" + strings.ToUpper(p.ProdCategPath) + "%' "
 		sentencia += join
