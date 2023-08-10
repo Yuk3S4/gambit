@@ -131,7 +131,7 @@ func SelectCategories(categId int, slug string) ([]models.Category, error) {
 
 		c.CategID = int(categId.Int32)
 		c.CateName = categName.String
-		c.CatePath = categName.String
+		c.CatePath = categPath.String
 
 		Categ = append(Categ, c)
 	}
